@@ -15,21 +15,21 @@ public class ConnectionManagerTest {
     @Before
     public void setUp(){
         connectionManager = new ConnectionManager(2);
-        connection = connectionManager.buildConnection("1.1.1.2", 0, "protocol");
+        connection = connectionManager.buildConnection("1.1.1.1", 5555, "http");
     }
 
     @Test
     //testing build with ip and port testing via number of connections method
     public void buildConnectionTwoParametersTestIp(){
       String expected = "1.1.1.2";
-      String actual = connectionManager.buildConnection("1.1.1.2", 0).getIp();
+      String actual = connectionManager.buildConnection("1.1.1.2", 0, "http").getIp();
       assertEquals("shoudl retuyrn ip", expected, actual);
     }
 
     @Test
     public void buildConnectionTwoParametersTestByPort(){
         int expected = 0;
-        int actual = connectionManager.buildConnection("1.1.1.2", 0).getPort();
+        int actual = connectionManager.buildConnection("1.1.1.2", 0, "http").getPort();
         assertEquals("should return port 0", expected, actual);
     }
 
@@ -37,7 +37,7 @@ public class ConnectionManagerTest {
     //testing build with 3 parameters
     public void buildConnectionThreeParametersTestIp(){
         String expected = "1.1.1.2";
-        String actual =connectionManager.buildConnection("100", 1, "protocol").getIp();
+        String actual =connectionManager.buildConnection("1.1.1.2", 1, "protocol").getIp();
         assertEquals("will return ip", expected, actual);
 
     }
@@ -62,7 +62,7 @@ public class ConnectionManagerTest {
     //testing 2 parameters protocol and port
     public void buildConnectionTwoParametersProtocolTest(){
         String expected = "protocol";
-        String actual = connectionManager.buildConnection("ip","protocol").getProtocol();
+        String actual = connectionManager.buildConnection("ip", 0000,"protocol").getProtocol();
         assertEquals("retruns protocol", expected, actual);
     }
 
@@ -70,21 +70,21 @@ public class ConnectionManagerTest {
     //testing 2 parameter build protocol and IP
     public void buildConnectionTwoParametersIpTest(){
         String expected = "ip";
-        String actual = connectionManager.buildConnection("ip", "protocol").getIp();
+        String actual = connectionManager.buildConnection("ip", 0000, "protocol").getIp();
         assertEquals("returns ip", expected, actual);
     }
 
     @Test
     public void testingConnectionMaxNull(){
-        connectionManager.buildConnection("ip", "protocl");
+        connectionManager.buildConnection("ip", 0000 , "protocl");
         Connection expected = null;
-        Connection actual = connectionManager.buildConnection("ip", "ptoyocol");
-        assertNull(connectionManager.buildConnection("ip", "protocl"));
+        Connection actual = connectionManager.buildConnection("ip", 0000 , "ptoyocol");
+        assertNull(connectionManager.buildConnection("ip", 0000, "protocl"));
     }
 
     @Test
     public void tesingConnectionMaxFull(){
-        connectionManager.buildConnection("ip", "protocol");
+        connectionManager.buildConnection("ip", 0000 , "protocol");
         Boolean actual = connectionManager.checkMaxConnection();
         assertTrue("shoudl return false", actual);
     }
@@ -92,7 +92,7 @@ public class ConnectionManagerTest {
     @Test
     public void testingConnectionTest(){
         String expected = "Connected to IP port protocoll";
-        String actual = connection.connection();
+        String actual = connection.connect();
         assertEquals("Stuff", expected, actual);
 
     }
